@@ -29,11 +29,11 @@ export default function Pagenation({currentPage,limit,count,path}:Props) {
     }
 
     return (
-        <div>
+        <div className="flex items-center justify-center space-x-2">
             <a href={`${path}?p=${currentPage - 1}`} aria-label="Previous Page">
                 <button
-                className={`${
-                    currentPage === 1 || count < limit ? "cursor-not-allowed" : ""
+                className={`px-4 py-2 border rounded ${
+                    currentPage === 1 || count < limit ? "cursor-not-allowed bg-gray-200" : "bg-blue-500 text-white"
                 }`}
                 disabled={currentPage === 1}
                 >
@@ -43,8 +43,8 @@ export default function Pagenation({currentPage,limit,count,path}:Props) {
                 {pageNumbers.map((number)=>(
                     <a key={number} href={`${path}?p=${number}`}>
                         <button
-                        className={`${
-                            currentPage === number ? "bg-indigo-500 text-white" : ""
+                        className={`px-4 py-2 border rounded ${
+                            currentPage === number ? "bg-indigo-500 text-white" : "bg-white text-black"
                         }`}
                         >
                             {number}
@@ -53,8 +53,8 @@ export default function Pagenation({currentPage,limit,count,path}:Props) {
                 ))}
                 <a href={`${path}?p=${currentPage + 1}`} aria-label="Next Page">
                     <button
-                    className={`${
-                        currentPage === totalPages || count < limit ? "cursor-nor-allowed" : ""
+                    className={`px-4 py-2 border rounded ${
+                        currentPage === totalPages || count < limit ? "cursor-not-allowed bg-gray-200" : "bg-blue-500 text-white"
                     }`}
                     disabled={currentPage === totalPages}
                     >
