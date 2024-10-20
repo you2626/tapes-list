@@ -1,11 +1,18 @@
+"use client";
+
 import Link from "next/link";
 import CreateIcon from '@mui/icons-material/Create';
 import SearchIcon from '@mui/icons-material/Search';
 import HomeIcon from '@mui/icons-material/Home';
 import LogoutIcon from '@mui/icons-material/Logout';
 import { Avatar, Button } from "@mui/material";
+import { useState } from "react";
+import MessageDialog from '../components/Modal';
 
 export default function Header(){
+
+    const [isOpen, setIsOpen] = useState(false);
+
     return (
         <div className="flex justify-between">
             <div>
@@ -16,7 +23,12 @@ export default function Header(){
             <Button variant="outlined" color="inherit" startIcon={<SearchIcon />}>
             検索
             </Button>
-            <Button variant="outlined" color="inherit" startIcon={<CreateIcon />}>
+            <MessageDialog
+        open={isOpen}
+        onCancel={() => setIsOpen(false)}
+        onOk={() => setIsOpen(false)}
+      />
+            <Button variant="outlined" color="inherit" startIcon={<CreateIcon />} onClick={() => setIsOpen(true)}>
             登録
             </Button>
             <Button variant="outlined" color="inherit" startIcon={<HomeIcon />}>
