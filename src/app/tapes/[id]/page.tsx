@@ -1,8 +1,8 @@
 import Image from "next/image";
 
-export default function Id (){
+export default function (){
     return (
-        <div>
+        <div className="border">
              <Image
                 src=""
                 alt="マスキングテープ画像"

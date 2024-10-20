@@ -25,7 +25,9 @@ export default function Header(){
             </Link>
             </Button>
             <Button variant="outlined" color="inherit" startIcon={<LogoutIcon />}>
+            <Link href="signin">
             ログアウト
+            </Link>
             </Button>
             </div>
         </div>
