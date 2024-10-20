@@ -37,7 +37,7 @@ export default function Pagenation({currentPage,limit,count,path}:Props) {
                 }`}
                 disabled={currentPage === 1}
                 >
-                    ≪
+                    ＜
                 </button>
                 </a>
                 {pageNumbers.map((number)=>(
@@ -58,7 +58,7 @@ export default function Pagenation({currentPage,limit,count,path}:Props) {
                     }`}
                     disabled={currentPage === totalPages}
                     >
-                        ≫
+                        ＞
                     </button>
                 </a>
         </div>

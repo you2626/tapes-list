@@ -2,7 +2,7 @@ import Image from "next/image";
 import Header from "../components/Header";
 import Pagenation from "../components/Pagenation";
 
-export default function Home() {
+export default function Tapes() {
   return (
     <div> 
       <header>
