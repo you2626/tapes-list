@@ -13,20 +13,20 @@ export default function Tapes() {
         <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
             <li className="border">
                 <Image
-                src=""
+                src="/images/sample.jpg"
                 alt="マスキングテープ画像"
-                width={30}
-                height={30}
+                width={400}
+                height={300}
                 />
                 <h3>ホワイト</h3>
                 <h4>カテゴリ</h4>
             </li>
             <li className="border">
                 <Image
-                src=""
+                src="/images/tape0.png"
                 alt="マスキングテープ画像"
-                width={30}
-                height={30}
+                width={256}
+                height={256}
                 />
                 <h3>ホワイト</h3>
                 <h4>カテゴリ</h4>
