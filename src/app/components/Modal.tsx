@@ -38,6 +38,7 @@ const Modal =(props:ModalProps) => {
             <h1 className="text-xl font-bold text-slate-800 mb-5">マスキングテープ登録</h1>
             <p className="text-lg mb-5">タイトル</p>
             <Input
+            value={addTitle}
             type="text"
             placeholder="タイトルを入力"
             onChange={(e)=>setAddTitle(e.target.value)}
@@ -53,21 +54,24 @@ const Modal =(props:ModalProps) => {
                         }
                     }}
                 />
-                {addImage && <Image src={addImage} alt="画像" width={100} height={100} />}
+                {addImage && <img src={addImage} alt="画像" width={500} height={500} />}
             <p className="text-lg mb-5">カテゴリ</p>
             <Input
+            value={addCategory}
             type="text"
             placeholder="カテゴリを入力"
             onChange={(e)=>setAddCategory(e.target.value)}
             />
 
             <p className="text-lg mb-5">備考</p>
-            <textarea placeholder="詳細を記載"
+            <textarea
+            value={addDescription} 
+            placeholder="詳細を記載"
             className="w-full"
             onChange={(e)=>setAddDiscription(e.target.value)}
             />
             
-            <div className="flex mt-auto w-full">
+            <div className="flex mt-auto w-full py-4">
             <button
             className="bg-orange-300 hover:bg-orange-400 text-white px-8 py-2 mx-auto"
             onClick={sendTape}

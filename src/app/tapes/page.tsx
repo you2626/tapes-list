@@ -34,7 +34,7 @@ useEffect(() => {
       setTapes(tapeList);
     } catch (error) {
       console.error("Error fetching tapes: ", error);
-      setError(error.message); // エラーをステートに保存
+      setError((error as Error).message); // エラーをステートに保存
     }
   };
 

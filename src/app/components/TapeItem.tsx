@@ -7,8 +7,8 @@ const TapeItem: React.FC<Type>=({imageSrc,title,category})=>{
                 <Image
                 src={imageSrc}
                 alt={`マスキングテープ画像:${title}`}
-                width={800}
-                height={800}
+                width={700}
+                height={700}
                 className="object-cover"
                 priority // 重要な画像にpriorityを追加
                 />

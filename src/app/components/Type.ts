@@ -6,3 +6,9 @@ export interface Type {
     title: string;
     category: string;
   };
+
+  interface TapeItemProps {
+    imageSrc: string;
+    title: string;
+    category: string;
+  }
