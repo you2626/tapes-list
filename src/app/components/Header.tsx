@@ -16,7 +16,7 @@ export default function Header(){
     return (
         <div className="flex justify-between">
             <div>
-            <Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg" />
+            <Avatar alt="Remy Sharp" src="" />
             <h2>user name</h2>
             </div>
             <div className="px-2 space-x-4">

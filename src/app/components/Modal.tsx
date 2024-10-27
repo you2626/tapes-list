@@ -1,6 +1,8 @@
 import { Input } from "@mui/material";
 import Image from "next/image";
-import React from "react";
+import React, { useState } from "react";
+import {collection,addDoc} from "firebase/firestore";
+import { db } from "../lib/firebase";
 
 export type ModalProps = {
     open:boolean;
@@ -9,6 +11,27 @@ export type ModalProps = {
 };
 
 const Modal =(props:ModalProps) => {
+
+    const [addTitle,setAddTitle] =useState("")
+    const [addImage,setAddImage] =useState("")
+    const [addCategory,setAddCategory] =useState("")
+    const [addDescription,setAddDiscription] =useState("")
+
+    const sendTape=async(e:any)=>{
+        // firebaseのデータベースにデータを追加する
+        e.preventDefault();
+
+        addDoc(collection(db,"tapes"),{
+            key:1,
+            imageSrc:addImage,
+            title:addTitle,
+            category:addCategory,
+            description: addDescription,
+        });
+        props.onOk(); // 親に確認を通知
+        
+    };
+
     return props.open ? (
         <>
         <div className="bg-white top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-96 h-70 p-5 flex flex-col items-start absolute z-20 rounded-lg shadow-lg">
@@ -17,27 +40,37 @@ const Modal =(props:ModalProps) => {
             <Input
             type="text"
             placeholder="タイトルを入力"
+            onChange={(e)=>setAddTitle(e.target.value)}
             />
-            <Image
-            src=""
-            alt="画像"
-            width={30}
-            height={30}
-            />
+            <p className="text-lg mb-5">画像</p>
+            <input
+                    type="file"
+                    accept="image/*"
+                    onChange={(e) => {
+                        const file = e.target.files?.[0];
+                        if (file) {
+                            setAddImage(URL.createObjectURL(file)); // 画像のプレビュー
+                        }
+                    }}
+                />
+                {addImage && <Image src={addImage} alt="画像" width={100} height={100} />}
             <p className="text-lg mb-5">カテゴリ</p>
             <Input
             type="text"
             placeholder="カテゴリを入力"
+            onChange={(e)=>setAddCategory(e.target.value)}
             />
 
             <p className="text-lg mb-5">備考</p>
             <textarea placeholder="詳細を記載"
-            className="w-full" />
+            className="w-full"
+            onChange={(e)=>setAddDiscription(e.target.value)}
+            />
             
             <div className="flex mt-auto w-full">
             <button
             className="bg-orange-300 hover:bg-orange-400 text-white px-8 py-2 mx-auto"
-            onClick={() => props.onOk()} 
+            onClick={sendTape}
             >
                 登録
             </button>
