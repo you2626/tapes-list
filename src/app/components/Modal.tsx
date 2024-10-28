@@ -1,8 +1,9 @@
 import { Input } from "@mui/material";
 import React, { useState } from "react";
-import { collection, addDoc } from "firebase/firestore";
+import { collection, addDoc, serverTimestamp } from "firebase/firestore";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import { db, storage } from "../lib/firebase";
+import {v4 as uuidv4} from 'uuid';
 
 export type ModalProps = {
     open: boolean;
@@ -11,6 +12,7 @@ export type ModalProps = {
 };
 
 const Modal = (props: ModalProps) => {
+
     const [addTitle, setAddTitle] = useState("");
     const [addImage, setAddImage] = useState("");
     const [addCategory, setAddCategory] = useState("");
@@ -19,13 +21,17 @@ const Modal = (props: ModalProps) => {
     const sendTape = async (e: React.FormEvent) => {
         e.preventDefault();
 
+        // uuidを生成
+        const generatedId=uuidv4();
+
         try {
             await addDoc(collection(db, "tapes"), {
-                key: 1,
+                id:generatedId,
                 imageSrc: addImage,
                 title: addTitle,
                 category: addCategory,
                 description: addDescription,
+                timestamp:serverTimestamp()
             });
             props.onOk(); // 親に確認を通知
         } catch (error) {
