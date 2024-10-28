@@ -2,6 +2,7 @@
 import { initializeApp } from "firebase/app";
 import { getFirestore } from "firebase/firestore"; // Firestoreを使用する場合
 import { getAuth } from "firebase/auth"; // 認証を使用する場合
+import { getStorage } from "firebase/storage"; //Cloud Storageを使用する場合
 
 const firebaseConfig = {
     apiKey: "AIzaSyDMPrtYh-Es5qrL2rcmufx9t74s_fQtigw",
@@ -15,5 +16,6 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 const auth = getAuth(app);
+const storage = getStorage(app);
 
-export { db, auth };
+export { db, auth,storage };

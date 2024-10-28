@@ -1,7 +1,13 @@
 import Image from "next/image";
 import { Type } from "./Type";
 
-const TapeItem: React.FC<Type>=({imageSrc,title,category})=>{
+interface TapeItemProps {
+    imageSrc: string;
+    title: string;
+    category: string;
+}
+
+const TapeItem: React.FC<TapeItemProps>=({imageSrc,title,category})=>{
     return (
         <li className="border">
                 <Image

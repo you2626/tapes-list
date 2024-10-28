@@ -26,9 +26,12 @@ useEffect(() => {
     try {
       const tapeData = collection(db, "tapes");
       const querySnapshot = await getDocs(tapeData);
-      const tapeList = querySnapshot.docs.map((doc) => ({
+      const tapeList:Type[] = querySnapshot.docs.map((doc) => ({
         id: doc.id,
-        ...doc.data(),
+        imageSrc: doc.data().imageSrc, // Firestoreの構造と一致していることを確認
+        title: doc.data().title,
+        category: doc.data().category,
+        description: doc.data().description,
       }));
 
       setTapes(tapeList);
@@ -56,7 +59,7 @@ useEffect(() => {
             {tapes.map((tape)=>(
               <TapeItem
               key={tape.id}
-              imageSrc={tape.src}
+              imageSrc={tape.imageSrc}
               title={tape.title}
               category={tape.category}
               />

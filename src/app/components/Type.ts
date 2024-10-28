@@ -1,14 +1,7 @@
 export interface Type {
-    key: number;
-    id: number;
+    id: string;
     imageSrc: string;
-    src: string;
     title: string;
     category: string;
+    description: string;
   };
-
-  interface TapeItemProps {
-    imageSrc: string;
-    title: string;
-    category: string;
-  }
