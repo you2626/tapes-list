@@ -5,9 +5,10 @@ import Header from "../components/Header";
 import Pagenation from "../components/Pagenation";
 import TapeItem from "../components/TapeItem";
 import {db} from "../lib/firebase";
-import { collection, getDocs } from "firebase/firestore"; 
+import { collection, getDocs, onSnapshot, orderBy, query, QuerySnapshot } from "firebase/firestore"; 
 import { useEffect, useState } from "react";
 import {Type} from "../components/Type";
+import { unsubscribe } from "diagnostics_channel";
 
 
 export default function Tapes() {
@@ -18,30 +19,32 @@ export default function Tapes() {
   //   { src: "/images/sample.jpg", title: "ホワイト", category: "カテゴリ1" },
   // ]
 
-const [tapes,setTapes]=useState<Type[]>([])
+const [tapes,setTapes]=useState<Type[]>([]);
 const [error, setError] = useState<string | null>(null); // エラーステートを追加
+const [loading,setLoading] = useState(true); //ローディング状態を追加
 
 useEffect(() => {
-  const fetchTapes = async () => {
-    try {
-      const tapeData = collection(db, "tapes");
-      const querySnapshot = await getDocs(tapeData);
-      const tapeList:Type[] = querySnapshot.docs.map((doc) => ({
-        id: doc.id,
-        imageSrc: doc.data().imageSrc, // Firestoreの構造と一致していることを確認
-        title: doc.data().title,
-        category: doc.data().category,
-        description: doc.data().description,
-      }));
+  const tapeData = collection(db, "tapes");
+  // 最新の順番で表示する
+  const q =query(tapeData,orderBy('timestamp','desc'));
+  const unsubscribe = onSnapshot(q,(querySnapshot) =>{
+  const tapeList:Type[] = querySnapshot.docs.map((doc) => ({
+    id: doc.id,
+    imageSrc: doc.data().imageSrc, // Firestoreの構造と一致していることを確認
+    title: doc.data().title,
+    category: doc.data().category,
+    description: doc.data().description,
+  }));
 
-      setTapes(tapeList);
-    } catch (error) {
+  setTapes(tapeList);
+  setLoading(false); //データ取得後にローディングを解除
+  },(error) =>{
       console.error("Error fetching tapes: ", error);
-      setError((error as Error).message); // エラーをステートに保存
-    }
-  };
+      setError(error.message);
+      setLoading(false);
+  });
 
-  fetchTapes();
+  return ()=>unsubscribe();
 }, []); // 空の依存配列でコンポーネントがマウントされた時だけ実行
   // const tapeData=collection(db,"tapes");
   // getDocs(tapeData).then((querySnapshot)=>{
@@ -62,6 +65,8 @@ useEffect(() => {
               imageSrc={tape.imageSrc}
               title={tape.title}
               category={tape.category}
+              description={tape.description}
+
               />
             ))}
             </ul>
