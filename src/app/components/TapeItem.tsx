@@ -5,9 +5,10 @@ interface TapeItemProps {
     imageSrc: string;
     title: string;
     category: string;
+    description:string;
 }
 
-const TapeItem: React.FC<TapeItemProps>=({imageSrc,title,category})=>{
+const TapeItem: React.FC<TapeItemProps>=({imageSrc,title,category,description})=>{
     return (
         <li className="border">
                 <Image
@@ -18,8 +19,10 @@ const TapeItem: React.FC<TapeItemProps>=({imageSrc,title,category})=>{
                 className="object-cover"
                 priority // 重要な画像にpriorityを追加
                 />
-                <h3 className="mt-2 text-lg font-semibold">{title}</h3>
+                <h3 className="mt-2 text-lg font-semibold text-gray-800">{title}</h3>
                 <h4 className="text-gray-500">{category}</h4>
+                <h4 className="text-gray-500">{description}</h4>
+
             </li>
     );
 };

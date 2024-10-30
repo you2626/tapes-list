@@ -8,10 +8,13 @@ import {db} from "../lib/firebase";
 import { collection, getDocs, onSnapshot, orderBy, query, QuerySnapshot } from "firebase/firestore"; 
 import { useEffect, useState } from "react";
 import {Type} from "../components/Type";
-import { unsubscribe } from "diagnostics_channel";
+import { useRouter } from "next/router";
+import Link from "next/link";
+import { Category, Description, ImageSearch } from "@mui/icons-material";
 
 
 export default function Tapes() {
+
   // tapes配列にtape情報を格納する
   // const tapes=[
   //   { src: "/images/sample.jpg", title: "ホワイト", category: "カテゴリ1" },
@@ -57,17 +60,30 @@ useEffect(() => {
       </header>
       <main>
         <h1 className="text-center">マスキングテープ一覧</h1>
+        
         <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
 {/* map関数を使ってtapeの情報をtapeItemコンポーネントに渡し、リスト作成 */}
             {tapes.map((tape)=>(
+              <li key={tape.id}>
+              <Link
+              href={{pathname: `/tapes/${tape.id}`,
+            query:{
+              id:tape.id,
+              src:tape.imageSrc,
+              title:tape.title,
+              category:tape.category,
+              description:tape.description,
+            }}}
+              >
               <TapeItem
               key={tape.id}
               imageSrc={tape.imageSrc}
               title={tape.title}
               category={tape.category}
               description={tape.description}
-
               />
+            </Link>
+            </li>
             ))}
             </ul>
       </main>
@@ -83,4 +99,4 @@ useEffect(() => {
       </footer>
     </div>
   );
-}
+};
