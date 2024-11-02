@@ -15,13 +15,6 @@ import { Category, Description, ImageSearch } from "@mui/icons-material";
 
 export default function Tapes() {
 
-  // tapes配列にtape情報を格納する
-  // const tapes=[
-  //   { src: "/images/sample.jpg", title: "ホワイト", category: "カテゴリ1" },
-  //   { src: "/images/tape0.png", title: "カラフル", category: "カテゴリ2" },
-  //   { src: "/images/sample.jpg", title: "ホワイト", category: "カテゴリ1" },
-  // ]
-
 const [tapes,setTapes]=useState<Type[]>([]);
 const [error, setError] = useState<string | null>(null); // エラーステートを追加
 const [loading,setLoading] = useState(true); //ローディング状態を追加
@@ -41,18 +34,22 @@ useEffect(() => {
 
   setTapes(tapeList);
   setLoading(false); //データ取得後にローディングを解除
-  },(error) =>{
+  },(error) => {
       console.error("Error fetching tapes: ", error);
       setError(error.message);
       setLoading(false);
   });
-
   return ()=>unsubscribe();
 }, []); // 空の依存配列でコンポーネントがマウントされた時だけ実行
-  // const tapeData=collection(db,"tapes");
-  // getDocs(tapeData).then((querySnapshot)=>{
-  //   setTapes(querySnapshot.docs.map((doc)=>doc.data()))
-  // })
+
+if (loading) {
+  return <div className="text-center">ローディング中...</div>;
+}
+
+if (error) {
+  return <div className="text-center text-red-500">エラーが発生しました: {error}</div>;
+}
+
   return (
     <div> 
       <header>
