@@ -15,8 +15,8 @@
 }
 
 body {
-  color: var(--foreground);
-  background: var(--background);
+  color: #202020;  /* 文字色を指定 */
+  background: #ffffe5;  /* 背景色を指定 */
   font-family: Arial, Helvetica, sans-serif;
 }
 
