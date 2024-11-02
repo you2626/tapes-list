@@ -1,19 +1,23 @@
 "use client";
 
 import Image from "next/image";
-import { useParams, useSearchParams } from "next/navigation";
+import { useParams, useRouter, useSearchParams } from "next/navigation";
 import { useState } from "react";
 import MessageDialog from "../../components/UpdateModal";
 import Link from "next/link";
 import { Button } from "@mui/material";
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import UpdateModal from "../../components/UpdateModal";
+import { deleteDoc, doc } from "firebase/firestore";
+import { db } from "@/app/lib/firebase";
 
 const TapesDetail = () => {
     // URLのパラメーターを取得
     const searchParams = useSearchParams();
     //動的ルーティングのパラメーターを取得
     const id = useParams().id; 
+    // useRouterを呼び出す
+    const router = useRouter();
 
         // 検索パラメーターに関連付けられたデータを取得（例としてデフォルト値を使用）
         const imageSrc = searchParams.get("src") ;
@@ -27,6 +31,17 @@ const TapesDetail = () => {
             setCategory(updatedCategory);
             setDescription(updatedDescription);
         };
+        
+        const handleDelete = async ()=>{
+            try{
+                await deleteDoc(doc(db, "tapes", id))
+                alert("削除しますか？")
+                Router.push("/tapes")
+            } catch(error) {
+                console.log("Error deleting document: ", error)
+            }
+        };
+
 
     return (
         <div>
@@ -78,7 +93,11 @@ const TapesDetail = () => {
                         編集
                         </button>
                         </div>
-                        <button className="p-2 bg-gray-500 text-white rounded hover:bg-gray-600 px-4">削除</button>
+                        <button 
+                        className="p-2 bg-gray-500 text-white rounded hover:bg-gray-600 px-4"
+                        onClick={handleDelete}>
+                            削除
+                            </button>
                         </div>
                         </div>
                         </div>
