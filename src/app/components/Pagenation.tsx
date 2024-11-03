@@ -10,6 +10,7 @@ type Props={
     limit:number;
     count:number;
     path:string;
+    onPageChange:(page:number) => void;
 };
 
 export default function Pagenation({currentPage,limit,count,path}:Props) {
@@ -29,22 +30,22 @@ export default function Pagenation({currentPage,limit,count,path}:Props) {
     }
 
     return (
-        <div className="flex items-center justify-center space-x-2">
+        <div className="flex items-center justify-center space-x-2 py-5">
             <a href={`${path}?p=${currentPage - 1}`} aria-label="Previous Page">
                 <button
-                className={`px-4 py-2 border rounded ${
-                    currentPage === 1 || count < limit ? "cursor-not-allowed bg-gray-200" : "bg-blue-500 text-white"
+                className={`px-4 py-3 border rounded-full ${
+                    currentPage === 1 || count < limit ? "cursor-not-allowed bg-gray-200" : "bg-white text-black"
                 }`}
                 disabled={currentPage === 1}
                 >
-                    ＜
+                    ←
                 </button>
                 </a>
                 {pageNumbers.map((number)=>(
                     <a key={number} href={`${path}?p=${number}`}>
                         <button
-                        className={`px-4 py-2 border rounded ${
-                            currentPage === number ? "bg-indigo-500 text-white" : "bg-white text-black"
+                        className={`px-5 py-3 border rounded-full transition ${
+                            currentPage === number ? "bg-orange-300 text-white" : "bg-white text-black"
                         }`}
                         >
                             {number}
@@ -53,12 +54,12 @@ export default function Pagenation({currentPage,limit,count,path}:Props) {
                 ))}
                 <a href={`${path}?p=${currentPage + 1}`} aria-label="Next Page">
                     <button
-                    className={`px-4 py-2 border rounded ${
-                        currentPage === totalPages || count < limit ? "cursor-not-allowed bg-gray-200" : "bg-blue-500 text-white"
+                    className={`px-4 py-3 border rounded-full ${
+                        currentPage === totalPages || count < limit ? "cursor-not-allowed bg-gray-200" : "bg-white text-black"
                     }`}
                     disabled={currentPage === totalPages}
                     >
-                        ＞
+                        →
                     </button>
                 </a>
         </div>
