@@ -10,7 +10,7 @@ interface TapeItemProps {
 
 const TapeItem: React.FC<TapeItemProps>=({imageSrc,title,category,description})=>{
     return (
-        <li className="border rounded-lg shadow-md">
+        <div className="border rounded-lg shadow-md">
                 <Image
                 src={imageSrc}
                 alt={`マスキングテープ画像:${title}`}
@@ -23,7 +23,7 @@ const TapeItem: React.FC<TapeItemProps>=({imageSrc,title,category,description})=
                 <h4 className="pl-3 text-gray-500">{category}</h4>
                 {/* <h4 className="text-gray-500">{description}</h4> */}
 
-            </li>
+            </div>
     );
 };
 
