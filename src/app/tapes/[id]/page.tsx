@@ -36,7 +36,7 @@ const TapesDetail = () => {
             try{
                 await deleteDoc(doc(db, "tapes", id))
                 alert("削除しますか？")
-                Router.push("/tapes")
+                router.push("/tapes")
             } catch(error) {
                 console.log("Error deleting document: ", error)
             }
@@ -45,34 +45,48 @@ const TapesDetail = () => {
 
     return (
         <div>
-            <header className="py-5 px-5">
+            <header className="py-5 px-3">
         <Link
         href="/tapes">
-            <Button variant="outlined" color="inherit" startIcon={<ArrowBackIcon />}>
+            <Button 
+            variant="outlined" 
+            color="inherit" 
+            startIcon={<ArrowBackIcon />}
+            sx={{
+                fontWeight: 'bold',
+                backgroundColor: 'white', // 背景を設定
+                borderColor: 'gray.300', // ボーダーの色を指定（必要に応じて）
+                '&:hover': {
+                    backgroundColor: 'gray.100', // ホバー時の色
+                },
+            }}
+            >
             戻る
             </Button>
         </Link>
         </header>
-            <div className="flex py-5 px-5 underline text-2xl font-bold">
+        <div className="px-3">
+            <div className="flex py-3 underline text-2xl font-bold">
                 <p>{title}</p>
                 </div>
                 <Image
                 src={imageSrc}
                 alt={`マスキングテープ画像:${title}`}
-                width={700}
-                height={700}
-                className="object-cover"
+                width={500}
+                height={500}
+                className="object-cover rounded-lg"
                 priority // 重要な画像にpriorityを追加
                 />
-            <div className="flex">
-                <h4>カテゴリ：</h4>
+                <div className="flex">
+                <h4 className="font-bold">カテゴリ：</h4>
                 <p>{category}</p>
                 </div>
-            <div className="">
-                <h4>備考：</h4>
+                <div>
+                <h4 className="font-bold">備考：</h4>
                 <p>{description}</p>
                 <div>
-                    </div>
+
+                </div>
                     <div className="flex">
                         <UpdateModal
                         open={isOpen}
@@ -85,22 +99,23 @@ const TapesDetail = () => {
                         initialCategory={category} // 初期カテゴリを渡す
                         initialDescription={description} // 初期説明を渡す
                         />
-                        <div className="flex">
+                        <div className="flex gap-3 py-5">
                             <button
                             className="p-2 bg-orange-400 text-white rounded hover:bg-orange-300 px-4"
                             onClick={() => setIsOpen(true)}
                             >
                         編集
                         </button>
-                        </div>
                         <button 
                         className="p-2 bg-gray-500 text-white rounded hover:bg-gray-600 px-4"
                         onClick={handleDelete}>
                             削除
                             </button>
-                        </div>
-                        </div>
-                        </div>
+                            </div>
+                            </div>
+                            </div>
+                            </div>
+                            </div>
         )
     
 };

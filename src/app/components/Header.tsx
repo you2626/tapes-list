@@ -20,7 +20,10 @@ export default function Header(){
             <h2>user name</h2>
             </div>
             <div className="px-2 space-x-4">
-            <Button variant="outlined" color="inherit" startIcon={<SearchIcon />}>
+            <Button variant="outlined" color="inherit" startIcon={<SearchIcon />}
+            sx={{
+                backgroundColor:'white'
+            }}>
             検索
             </Button>
             <MessageDialog
@@ -28,15 +31,25 @@ export default function Header(){
         onCancel={() => setIsOpen(false)}
         onOk={() => setIsOpen(false)}
       />
-            <Button variant="outlined" color="inherit" startIcon={<CreateIcon />} onClick={() => setIsOpen(true)}>
+            <Button variant="outlined" color="inherit" startIcon={<CreateIcon />} 
+            sx={{
+                backgroundColor:'white'
+            }}
+            onClick={() => setIsOpen(true)}>
             登録
             </Button>
-            <Button variant="outlined" color="inherit" startIcon={<HomeIcon />}>
+            <Button variant="outlined" color="inherit" startIcon={<HomeIcon />}
+            sx={{
+                backgroundColor:'white'
+            }}>
             <Link href="mypage">
             マイページ
             </Link>
             </Button>
-            <Button variant="outlined" color="inherit" startIcon={<LogoutIcon />}>
+            <Button variant="outlined" color="inherit" startIcon={<LogoutIcon />}
+            sx={{
+                backgroundColor:'white'
+            }}>
             <Link href="signin">
             ログアウト
             </Link>
