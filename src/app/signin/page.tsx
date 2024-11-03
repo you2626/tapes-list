@@ -1,34 +1,65 @@
+'use client';
+
+import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import Link from "next/link";
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
+import { auth } from "../lib/firebase";
 
 const Signin=()=>{
+    const [email,setEmail] = useState("");
+    const [password,setPassword] = useState("");
+    const [error, setError] = useState(""); // エラーメッセージ用のステートを追加
+
+    // ユーザーがログインボタンを押下したときにdoLogin関数が実行される
+    const doLogin = async(e:any) => {
+        e.preventDefault();
+
+        // Firebaseで用意されているメールアドレスとパスワードでログインするための関数
+        try {
+        const userCredential = await signInWithEmailAndPassword(auth,email,password);
+            const user = userCredential.user;
+            alert("ログイン成功!")
+            console.log(user);
+        } catch(error:any)  {
+            setError(error.message);
+            alert("ログインできません")
+            console.log(error);
+        }
+    };
 
     return (
         <div className="max-w-md mx-auto p-6 border border-gray-300 rounded-lg bg-gray-100">
             <h1 className="text-center text-2xl font-bold mb-4">
-                サインイン
+                ログイン
                 </h1>
-            <form>
+                {error && <p className="text-red-500 mb-4">{error}</p>} {/* エラーメッセージを表示 */}
+            <form onSubmit={doLogin}> {/* onSubmitハンドラーを設定 */}
                 <label className="block mb-2">
-                    Emaill
+                    メールアドレス：
                     <input name="email" 
                     type="email" 
                     placeholder="emailを入力"
                     className="mt-1 block w-full p-2 border border-gray-300 rounded"
+                    onChange={(e) => setEmail(e.target.value)}
+                    autoComplete="username" // メールアドレスを記憶する
                     />
                 </label>
                 <label className="block mb-4">
-                    Password
+                    パスワード：
                     <input name="password" 
                     type="password" 
                     placeholder="passwordを入力"
                     className="mt-1 block w-full p-2 border border-gray-300 rounded"
+                    onChange={(e) =>setPassword(e.target.value)}
+                    autoComplete="current-password" // パスワードを安全に記憶する
                     />
                 </label>
-                <button type="submit"
-                className="w-full p-2 bg-blue-500 text-white rounded hover:bg-blue-600">
-                    サインイン
-                    </button>
+                <button 
+                type="submit"
+                className="w-full p-2 bg-orange-300 text-white rounded hover:bg-orange-400"
+                >
+                ログイン
+                </button>
             </form>
             <div>
                 <h2>
