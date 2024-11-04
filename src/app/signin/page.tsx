@@ -4,11 +4,14 @@ import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import Link from "next/link";
 import React, { useContext, useState } from "react";
 import { auth } from "../lib/firebase";
+import Header from "../components/Header";
+import { useRouter } from "next/navigation";
 
 const Signin=()=>{
     const [email,setEmail] = useState("");
     const [password,setPassword] = useState("");
     const [error, setError] = useState(""); // エラーメッセージ用のステートを追加
+    const router = useRouter(); // useRouterを呼び出し
 
     // ユーザーがログインボタンを押下したときにdoLogin関数が実行される
     const doLogin = async(e:any) => {
@@ -20,6 +23,7 @@ const Signin=()=>{
             const user = userCredential.user;
             alert("ログイン成功!")
             console.log(user);
+            router.push("/tapes"); // ログイン成功後に/tapesへリダイレクト
         } catch(error:any)  {
             setError(error.message);
             alert("ログインできません")
@@ -28,6 +32,7 @@ const Signin=()=>{
     };
 
     return (
+
         <div className="max-w-md mx-auto p-6 border border-gray-300 rounded-lg bg-gray-100">
             <h1 className="text-center text-2xl font-bold mb-4">
                 ログイン

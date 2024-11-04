@@ -11,6 +11,7 @@ import {Type} from "../components/Type";
 import { useRouter } from "next/router";
 import Link from "next/link";
 import { Category, Description, ImageSearch } from "@mui/icons-material";
+import { AuthProvider } from "../context/AuthContext";
 
 
 export default function Tapes() {
@@ -122,6 +123,8 @@ if (error) {
 }
 
   return (
+    <AuthProvider>
+      
     <div> 
       <header>
         <Header />
@@ -135,13 +138,13 @@ if (error) {
               <li key={tape.id}>
               <Link
               href={{pathname: `/tapes/${tape.id}`,
-            query:{
-              id:tape.id,
-              src:tape.imageSrc,
-              title:tape.title,
-              category:tape.category,
-              description:tape.description,
-            }}}
+              query:{
+                id:tape.id,
+                src:tape.imageSrc,
+                title:tape.title,
+                category:tape.category,
+                description:tape.description,
+              }}}
               >
                 <div>
               <TapeItem
@@ -171,5 +174,6 @@ if (error) {
       <a>© 2024 you2626</a>
       </footer>
     </div>
+      </AuthProvider>
   );
 };
