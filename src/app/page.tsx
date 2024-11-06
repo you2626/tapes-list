@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Header from "./components/Header";
 import { AuthProvider } from "./context/AuthContext";
+import Link from "next/link";
 
 export default function Home() {
   return (
@@ -8,7 +9,9 @@ export default function Home() {
 
     <div> 
       <header>
-        
+        <Link href="/tapes">
+        <button>一覧へ</button>
+        </Link>
       </header>
       <main>
       </main>

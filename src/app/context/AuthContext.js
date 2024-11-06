@@ -2,6 +2,7 @@
 
 import React, { useEffect,useState,useContext } from "react";
 import { getAuth, onAuthStateChanged} from 'firebase/auth';
+import { auth } from '../lib/firebase'; // ここで初期化されたauthをインポート
 
 // コンテキストを作成
 const AuthContext = React.createContext();
@@ -15,7 +16,6 @@ export function useAuth () {
 export function AuthProvider({children}) {
     const [currentUser,setCurrentUser] = useState(null);
     const [loading,setLoading] = useState(true);
-    const auth = getAuth(); // Firebaseのauthを初期化
 
     // 第2引き数に[]を指定して、初回レンダリングのみ関数を実行
     useEffect(() => {
