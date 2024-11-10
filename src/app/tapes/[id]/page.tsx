@@ -15,33 +15,43 @@ const TapesDetail = () => {
     // URLのパラメーターを取得
     const searchParams = useSearchParams();
     //動的ルーティングのパラメーターを取得
-    const id = useParams().id; 
+    const { id } = useParams(); 
     // useRouterを呼び出す
     const router = useRouter();
 
         // 検索パラメーターに関連付けられたデータを取得（例としてデフォルト値を使用）
-        const imageSrc = searchParams.get("src") ;
+        const imageSrc = searchParams.get("src") || "/images/tape0.png";
         const [title, setTitle] = useState(searchParams.get("title") || "デフォルトタイトル");
         const [category, setCategory] = useState(searchParams.get("category") || "デフォルトカテゴリ");
         const [description, setDescription] = useState(searchParams.get("description") || "デフォルトの説明");
         const [isOpen, setIsOpen] = useState(false);
 
-        const handleUpdate = (updatedTitle, updatedCategory, updatedDescription) => {
+        // idがstring[]の場合に最初の要素を取り出す
+        const generatedId = Array.isArray(id) ? id[0] : id;
+
+        const handleUpdate = (updatedTitle:string, updatedCategory:string, updatedDescription:string) => {
             setTitle(updatedTitle);
             setCategory(updatedCategory);
             setDescription(updatedDescription);
         };
-        
-        const handleDelete = async ()=>{
-            try{
-                await deleteDoc(doc(db, "tapes", id))
-                alert("削除しますか？")
-                router.push("/tapes")
-            } catch(error) {
-                console.log("Error deleting document: ", error)
-            }
-        };
 
+        const handleDelete = async () => {
+            // `id` が文字列型であることを確認
+            if (typeof id !== "string") {
+              console.error("IDが不正です。");
+              return;
+            }
+          
+            try {
+              // Firestoreのドキュメントを削除
+              const docRef = doc(db, "tapes", id);
+              await deleteDoc(docRef);
+              alert("削除しました");
+              router.push("/tapes");
+            } catch (error) {
+              console.error("Error deleting document: ", error);
+            }
+          };
 
     return (
         <div>
@@ -94,7 +104,7 @@ const TapesDetail = () => {
                         onOk={() => setIsOpen(false)}
                         onUpdate={handleUpdate}
                         imageSrc={imageSrc} // 画像URLを渡す
-                        generatedId={id} // IDを渡す
+                        generatedId={generatedId} // IDを渡す
                         initialTitle={title} // 初期タイトルを渡す
                         initialCategory={category} // 初期カテゴリを渡す
                         initialDescription={description} // 初期説明を渡す
