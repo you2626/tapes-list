@@ -2,8 +2,6 @@
 
 import { Avatar, Button } from "@mui/material";
 import { getAuth, sendPasswordResetEmail } from "firebase/auth";
-import Image from "next/image";
-import { Input } from "postcss";
 import { useState } from "react";
 import { auth } from "../lib/firebase";
 
@@ -12,8 +10,10 @@ export default function Mypage (){
     const [email,setEmail] = useState("");
     const [myname,setMyname] = useState("");
 
-    const doResetEmail = async(e:any) => {
+    // パスワードリセットのメール送信関数
+    const doResetEmail = async(e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
+
         const actionCodeSettings = {
             // パスワード再設定後にログイン画面にリダイレクトさせる
             url : "http://localhost:3000/signin",
@@ -51,6 +51,8 @@ export default function Mypage (){
                     name="email"
                     className="border rounded p-2 mb-4 w-full"
                     onChange={(e) => setEmail(e.target.value)}
+                    value={email}
+                    required
                     />
                 <Button
                 type="submit"
@@ -62,4 +64,4 @@ export default function Mypage (){
             </div>
         </div>
     )
-}
+};
