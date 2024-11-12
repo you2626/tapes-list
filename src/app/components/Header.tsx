@@ -16,6 +16,8 @@ export default function Header(){
 
     // 現在、ログインしているユーザーを取得する
     const {currentUser} = useAuth();
+    
+    // モーダルの開閉状態を管理
     const [isOpen, setIsOpen] = useState(false);
 
     // ログアウトの処理

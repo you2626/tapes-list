@@ -4,6 +4,7 @@ import { collection, addDoc, serverTimestamp } from "firebase/firestore";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import { db, storage } from "../lib/firebase";
 import {v4 as uuidv4} from 'uuid';
+import { useAuth } from "../context/AuthContext";
 
 export type ModalProps = {
     open: boolean;
@@ -13,19 +14,30 @@ export type ModalProps = {
 
 const Modal = (props: ModalProps) => {
 
+    // 現在、ログインしているユーザーを取得する
+    const {currentUser} = useAuth();
+
     const [addTitle, setAddTitle] = useState("");
     const [addImage, setAddImage] = useState("");
     const [addCategory, setAddCategory] = useState("");
     const [addDescription, setAddDescription] = useState("");
 
+    // テープの送信処理
     const sendTape = async (e: React.FormEvent) => {
         e.preventDefault();
+
+        // currentUserが存在しない場合は処理を中断
+        if (!currentUser) {
+            alert("ログインしていません。ログインしてください。");
+            return;
+        }
 
         // uuidを生成
         const generatedId=uuidv4();
 
         try {
             await addDoc(collection(db, "tapes"), {
+                userId: currentUser.uid,  // ログインしているユーザーのIDを保存
                 id:generatedId,
                 imageSrc: addImage,
                 title: addTitle,
@@ -60,6 +72,7 @@ const Modal = (props: ModalProps) => {
         <>
             <div className="bg-white top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-96 h-70 p-5 flex flex-col items-start absolute z-20 rounded-lg shadow-lg">
                 <h1 className="text-xl font-bold text-slate-800 mb-5">マスキングテープ登録</h1>
+                
                 <p className="text-lg mb-5">タイトル</p>
                 <Input
                     value={addTitle}
