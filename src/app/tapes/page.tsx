@@ -5,11 +5,11 @@ import Header from "../components/Header";
 import Pagenation from "../components/Pagination";
 import TapeItem from "../components/TapeItem";
 import {db} from "../lib/firebase";
-import { collection, getDocs, limit as firestoreLimit, onSnapshot, orderBy, query, startAfter, startAt } from "firebase/firestore"; 
+import { collection, getDocs, limit as firestoreLimit, onSnapshot, orderBy, query, startAfter, startAt, where } from "firebase/firestore"; 
 import { useEffect, useState } from "react";
 import {Type} from "../components/Type";
 import Link from "next/link";
-import { AuthProvider } from "../context/AuthContext";
+import { AuthProvider, useAuth } from "../context/AuthContext";
 
 export default function Tapes() {
   const [tapes,setTapes]=useState<Type[]>([]);
@@ -35,10 +35,23 @@ export default function Tapes() {
     window.history.pushState({}, '', `/tapes?p=${page}`);
   };
 
+  // AuthContext から currentUser を取得
+  const { currentUser } = useAuth() || {};
+  
+  // currentUser が存在しない場合はreturnする
+  if (!currentUser) {
+    return <div>ログインしていません。ログインしてください。</div>;
+  }
+
+  const userId = currentUser?.uid;
+
   // 全データの取得と保存
   useEffect(() => {
+
+    if (!userId) return; // userId がない場合は処理を終了
+
     const tapeData = collection(db, "tapes");
-    const q = query(tapeData, orderBy('timestamp', 'desc'));
+    const q = query(tapeData,where("currentUser", "==", userId), orderBy('timestamp', 'desc'));
 
     const unsubscribe = onSnapshot(q, (querySnapshot) => {
       const docs = querySnapshot.docs;
