@@ -11,11 +11,15 @@ import { useState } from "react";
 import MessageDialog from '../components/Modal';
 import { useAuth } from '../context/AuthContext';
 import { getAuth, signOut } from "firebase/auth";
+import { useRouter } from "next/navigation";
+
 
 export default function Header(){
 
     // 現在、ログインしているユーザーを取得する
     const {currentUser} = useAuth();
+
+    const router = useRouter();
     
     // モーダルの開閉状態を管理
     const [isOpen, setIsOpen] = useState(false);
@@ -26,6 +30,7 @@ export default function Header(){
         try {
             await signOut(auth);
             alert("ログアウトしました！")
+            router.push("/signin");
         } catch(error) {
             console.error("ログアウトエラー:",error);
             alert("ログアウトに失敗しました");
@@ -35,9 +40,8 @@ export default function Header(){
     return (
         <div className="flex justify-between">
             <div>
-            <Avatar alt="Remy Sharp" src="" />
+            <Avatar alt="User Avatar" src={currentUser?.photoURL || "/default-avator.png"} />
             <div>
-                <h2>user name</h2>
             {currentUser ? (
                 // suppressHydrationWarningを入れてサーバーサイドとクライアントサイドでレンダーされる内容が違うときにエラーが出ないようにする
                 // useAuth()で取得した現在ログインしているユーザーをcurrentUser.emailで表示
@@ -50,6 +54,7 @@ export default function Header(){
             </div>
             </div>
             <div className="px-2 space-x-4">
+
             <Button variant="outlined" color="inherit" startIcon={<SearchIcon />}
             sx={{
                 backgroundColor:'white'

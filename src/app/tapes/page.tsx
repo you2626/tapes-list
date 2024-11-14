@@ -38,10 +38,10 @@ export default function Tapes() {
   // AuthContext から currentUser を取得
   const { currentUser } = useAuth();
   
-  // currentUser が存在しない場合はreturnする
-  if (!currentUser) {
-    return <div>ログインしていません。ログインしてください。</div>;
-  }
+  // // currentUser が存在しない場合はreturnする
+  // if (!currentUser) {
+  //   return <div>ログインしていません。ログインしてください。</div>;
+  // }
 
   const userId = currentUser?.uid;
 
@@ -65,7 +65,7 @@ export default function Tapes() {
     });
 
     return () => unsubscribe();
-  }, []);
+  }, [userId, currentUser]);
 
   // ページごとのデータ取得
   useEffect(() => {
@@ -98,7 +98,6 @@ export default function Tapes() {
   }
 
   return (
-    <AuthProvider>
     <div> 
       <header>
         <Header />
@@ -149,6 +148,5 @@ export default function Tapes() {
         <a>© 2024 you2626</a>
       </footer>
     </div>
-    </AuthProvider>
   );
 };

@@ -1,9 +1,10 @@
 'use client';
 
-import { Avatar, Button } from "@mui/material";
+import { Avatar } from "@mui/material";
 import { getAuth, sendPasswordResetEmail } from "firebase/auth";
 import { useState } from "react";
 import { auth } from "../lib/firebase";
+import Header from "../components/Header";
 
 export default function Mypage (){
 
@@ -32,14 +33,10 @@ export default function Mypage (){
     };
 
     return (
+        <div>
+            <Header />
+
         <div className="flex flex-col items-center justify-center min-h-screen p-6">
-            <Avatar
-            alt="プロフィール画像"
-            src=""
-            sx={{ width: 100, height: 100 }}
-            />
-            <h2>{myname}</h2>
-            <h3>メールアドレス</h3>
             <h1 className="text-xl font-semibold mt-6">パスワード再設定</h1>
             <div>
                 <form onSubmit={doResetEmail} className="w-full max-w-md mt-4 bg-white p-6 rounded-lg shadow-md">
@@ -54,13 +51,14 @@ export default function Mypage (){
                     value={email}
                     required
                     />
-                <Button
+                <button
                 type="submit"
                 className="px-8 py-2 bg-orange-300 text-white rounded hover:bg-orange-400"
                 >
                 送信
-            </Button>
+            </button>
             </form>
+                </div>
             </div>
         </div>
     )
