@@ -36,7 +36,7 @@ export default function Tapes() {
   };
 
   // AuthContext から currentUser を取得
-  const { currentUser } = useAuth() || {};
+  const { currentUser } = useAuth();
   
   // currentUser が存在しない場合はreturnする
   if (!currentUser) {
@@ -51,7 +51,7 @@ export default function Tapes() {
     if (!userId) return; // userId がない場合は処理を終了
 
     const tapeData = collection(db, "tapes");
-    const q = query(tapeData,where("currentUser", "==", userId), orderBy('timestamp', 'desc'));
+    const q = query(tapeData,where("userId", "==", currentUser.uid), orderBy('timestamp', 'desc'));
 
     const unsubscribe = onSnapshot(q, (querySnapshot) => {
       const docs = querySnapshot.docs;
