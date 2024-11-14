@@ -3,7 +3,9 @@
 import { createUserWithEmailAndPassword, getAuth } from "firebase/auth";
 import Link from "next/link";
 import React, { useState } from "react";
-import { auth } from "../lib/firebase";
+import { auth, db } from "../lib/firebase";
+import { doc, setDoc } from "firebase/firestore";
+import { useRouter } from "next/navigation";
 
 const Signup=()=>{
     // useStateでユーザーが入力したマイネームとメールアドレス、パスワードをmyname,email,passwordに格納する
@@ -12,19 +14,42 @@ const Signup=()=>{
     const [password,setPassword] = useState("");
     const [error, setError] = useState("");
 
+    const router = useRouter();
+
     // ユーザーが登録ボタンを押下したときにdoRegister関数が実行される
     const doRegister = async(e:any) => {
         e.preventDefault(); // フォームのデフォルト動作を防ぐ
-        
+
+        // バリデーション
+        if (!myname || !email || !password ) {
+            setError("すべての項目を入力してください")
+            return;
+        }
+
+        // パスワードの文字数制限
+        if(password.length < 6) {
+            setError("パスワードは6文字以上で入力してください");
+            return;
+        }
 
         // Firebaseで用意されているユーザー登録の関数
         try {
             const userCredential = await createUserWithEmailAndPassword(auth, email, password);
             // ユーザー登録すると自動的にログインされてuserCredential.uerでユーザーの情報を取得できる
             const user = userCredential.user;
+            
+            // Firestoreにユーザー名を保存
+            await setDoc(doc(db,"users",user.uid), {
+                name:myname,
+                email:email,
+            });
+
             // ユーザー登録できたかどうかをわかりやすくするためのアラート
             alert("登録完了しました！");
-            console.log(user);
+
+            // 登録後、ログインページへリダイレクト
+            router.push("/signin");
+            
         } catch (error:any) {
             setError(error.message);  // エラーメッセージを状態に保存
             console.log(error);
