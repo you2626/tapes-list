@@ -40,7 +40,7 @@ const Signup=()=>{
             
             // Firestoreにユーザー名を保存
             await setDoc(doc(db,"users",user.uid), {
-                name:myname,
+                displayName:myname,
                 email:email,
             });
 
@@ -49,7 +49,7 @@ const Signup=()=>{
 
             // 登録後、ログインページへリダイレクト
             router.push("/signin");
-            
+
         } catch (error:any) {
             setError(error.message);  // エラーメッセージを状態に保存
             console.log(error);

@@ -7,20 +7,46 @@ import HomeIcon from '@mui/icons-material/Home';
 import LogoutIcon from '@mui/icons-material/Logout';
 import LoginIcon from '@mui/icons-material/Login';
 import { Avatar, Button } from "@mui/material";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import MessageDialog from '../components/Modal';
 import { useAuth } from '../context/AuthContext';
 import { getAuth, signOut } from "firebase/auth";
 import { useRouter } from "next/navigation";
+import { doc, getDoc } from "firebase/firestore";
+import { db } from "../lib/firebase";
 
 
 export default function Header(){
 
     // 現在、ログインしているユーザーを取得する
     const {currentUser} = useAuth();
-
     const router = useRouter();
+
+    const [userDisplayName, setUserDisplayName] = useState<string | null>(null);
     
+    // Firestoreからユーザー情報を取得
+    useEffect(() => {
+        const fetchUserData = async () => {
+            if (currentUser) {
+                try {
+                    const userDocRef = doc(db, "users", currentUser.uid); // ユーザーIDでドキュメントを取得
+                    const userDoc = await getDoc(userDocRef);
+
+                    if (userDoc.exists()) {
+                        // Firestoreから取得したdisplayNameをstateにセット
+                        setUserDisplayName(userDoc.data()?.displayName || "");
+                    } else {
+                        setUserDisplayName("");
+                    }
+                } catch (error) {
+                    console.error("Firestoreからユーザー情報を取得できませんでした:", error);
+                    setUserDisplayName("");
+                }
+            }
+        }
+        fetchUserData();
+    },[currentUser])                
+                    
     // モーダルの開閉状態を管理
     const [isOpen, setIsOpen] = useState(false);
 
@@ -46,7 +72,7 @@ export default function Header(){
                 // suppressHydrationWarningを入れてサーバーサイドとクライアントサイドでレンダーされる内容が違うときにエラーが出ないようにする
                 // useAuth()で取得した現在ログインしているユーザーをcurrentUser.emailで表示
                 <div suppressHydrationWarning={true}>
-                    <div>{ currentUser.email}</div>
+                    <div>{userDisplayName}</div>
                     </div>
             ) : (
                 <div suppressHydrationWarning={true}>ログインしていません。</div>
