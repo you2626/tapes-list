@@ -1,8 +1,14 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
     images: {
-        domains: ['firebasestorage.googleapis.com'], // 画像を読み込むドメインを指定
-      },
+      remotePatterns: [
+        {
+          protocol:'https',
+          hostname:'firebasestorage.googleapis.com',
+          pathname:'/**'
+        }
+      ],
+    },
 };
 
 export default nextConfig;
