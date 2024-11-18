@@ -1,6 +1,7 @@
 import { collection, doc, serverTimestamp, updateDoc } from 'firebase/firestore';
 import React, { useEffect, useState } from 'react';
 import { db } from '../lib/firebase';
+import { Input } from '@mui/material';
 
 export type ModalProps = {
   open: boolean;
@@ -55,29 +56,29 @@ const UpdateModal = (props: ModalProps) => {
     return props.open ? (
     <>
     <div className="bg-white top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-96 h-70 p-5 flex flex-col items-start absolute z-20 rounded-lg shadow-lg">
-                <h1 className="text-xl font-bold text-slate-800 mb-5">編集</h1>
-                <p className="text-lg mb-5">タイトル</p>
-                <input
+                <h1 className="text-xl font-bold mb-5">編集</h1>
+                <p className="text-lg my-5">タイトル</p>
+                <Input
                     value={updateTitle}
                     type="text"
                     placeholder="タイトルを編集"
                     onChange={(e) => setUpdateTitle(e.target.value)}
                 />
-                <p className="text-lg mb-5">カテゴリ</p>
-                <input
+                <p className="text-lg my-5">カテゴリ</p>
+                <Input
                     value={updateCategory}
                     type="text"
                     placeholder="カテゴリを編集"
                     onChange={(e) => setUpdateCategory(e.target.value)}
                 />
-                <p className="text-lg mb-5">備考</p>
+                <p className="text-lg my-5">備考</p>
                 <textarea
                     value={updateDescription}
                     placeholder="詳細を編集"
-                    className="w-full"
+                    className="w-full border"
                     onChange={(e) => setUpdateDescription(e.target.value)}
                 />
-                <div className="flex mt-auto w-full py-4">
+                <div className="flex mt-auto w-full py-5">
                     <button
                         className="bg-orange-300 hover:bg-orange-400 text-white px-8 py-2 mx-auto"
                         onClick={updateTape}

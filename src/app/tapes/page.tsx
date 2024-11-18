@@ -1,5 +1,6 @@
 'use client';
 
+import React from 'react';
 import Image from "next/image";
 import Header from "../components/Header";
 import Pagenation from "../components/Pagination";
@@ -37,11 +38,6 @@ export default function Tapes() {
 
   // AuthContext から currentUser を取得
   const { currentUser } = useAuth();
-  
-  // // currentUser が存在しない場合はreturnする
-  // if (!currentUser) {
-  //   return <div>ログインしていません。ログインしてください。</div>;
-  // }
 
   const userId = currentUser?.uid;
 

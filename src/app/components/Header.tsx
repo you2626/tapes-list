@@ -1,8 +1,10 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import CreateIcon from '@mui/icons-material/Create';
 import SearchIcon from '@mui/icons-material/Search';
+import FaceIcon from '@mui/icons-material/Face';
 import HomeIcon from '@mui/icons-material/Home';
 import LogoutIcon from '@mui/icons-material/Logout';
 import LoginIcon from '@mui/icons-material/Login';
@@ -23,24 +25,30 @@ export default function Header(){
     const router = useRouter();
 
     const [userDisplayName, setUserDisplayName] = useState<string | null>(null);
-    
+    const [userImage,setUserImage] = useState<string | null>(null);
+
     // Firestoreからユーザー情報を取得
     useEffect(() => {
         const fetchUserData = async () => {
-            if (currentUser) {
+            if (currentUser?.uid) {
                 try {
-                    const userDocRef = doc(db, "users", currentUser.uid); // ユーザーIDでドキュメントを取得
+                    const userDocRef = doc(db, "users", currentUser.uid);
                     const userDoc = await getDoc(userDocRef);
 
                     if (userDoc.exists()) {
-                        // Firestoreから取得したdisplayNameをstateにセット
+                        const data = userDoc.data();
+                        console.log("User data:",data);
+                        // Firestoreから取得したdisplayName,imageをstateにセット
                         setUserDisplayName(userDoc.data()?.displayName || "");
+                        setUserImage(userDoc.data()?.image || "");
                     } else {
                         setUserDisplayName("");
+                        setUserImage("");
                     }
                 } catch (error) {
                     console.error("Firestoreからユーザー情報を取得できませんでした:", error);
                     setUserDisplayName("");
+                    setUserImage("");
                 }
             }
         }
@@ -64,34 +72,42 @@ export default function Header(){
     };
 
     return (
-        <div className="flex justify-between">
-            <div>
-            <Avatar alt="User Avatar" src={currentUser?.photoURL || "/default-avator.png"} />
+        <div className="flex justify-between px-4 py-4">
             <div>
             {currentUser ? (
-                // suppressHydrationWarningを入れてサーバーサイドとクライアントサイドでレンダーされる内容が違うときにエラーが出ないようにする
-                // useAuth()で取得した現在ログインしているユーザーをcurrentUser.emailで表示
+            <>
+            <Avatar 
+            alt="User Avatar" 
+            src={userImage || "/images/default-avatar.png"}
+            sx={{width:40,height:40}}
+            />
+                {/* // suppressHydrationWarningを入れてサーバーサイドとクライアントサイドでレンダーされる内容が違うときにエラーが出ないようにする
+                // useAuth()で取得した現在ログインしているユーザーをdisplayNameで表示 */}
                 <div suppressHydrationWarning={true}>
-                    <div>{userDisplayName}</div>
-                    </div>
+                        <div className="font-bold text-orange-400">{userDisplayName}</div>
+                </div>
+            </>
             ) : (
                 <div suppressHydrationWarning={true}>ログインしていません。</div>
             )}
-            </div>
-            </div>
-            <div className="px-2 space-x-4">
+            </div>       
 
-            <Button variant="outlined" color="inherit" startIcon={<SearchIcon />}
+            <div className="px-2 space-x-4">
+            <Button variant="outlined" color="inherit" startIcon={<HomeIcon />}
             sx={{
                 backgroundColor:'white'
             }}>
-            検索
+            <Link href="/tapes?p=1">
+            ホーム
+            </Link>
             </Button>
+
             <MessageDialog
             open={isOpen}
             onCancel={() => setIsOpen(false)}
             onOk={() => setIsOpen(false)}
             />
+
             <Button variant="outlined" color="inherit" startIcon={<CreateIcon />} 
             sx={{
                 backgroundColor:'white'
@@ -99,11 +115,11 @@ export default function Header(){
             onClick={() => setIsOpen(true)}>
             登録
             </Button>
-            <Button variant="outlined" color="inherit" startIcon={<HomeIcon />}
+            <Button variant="outlined" color="inherit" startIcon={<FaceIcon />}
             sx={{
                 backgroundColor:'white'
             }}>
-            <Link href="mypage">
+            <Link href="/mypage">
             マイページ
             </Link>
             </Button>

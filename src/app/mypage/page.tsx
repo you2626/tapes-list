@@ -8,6 +8,7 @@ import Header from "../components/Header";
 
 export default function Mypage (){
 
+    const [users,setUsers] = useState("");
     const [email,setEmail] = useState("");
     const [myname,setMyname] = useState("");
 
@@ -37,6 +38,12 @@ export default function Mypage (){
             <Header />
 
         <div className="flex flex-col items-center justify-center min-h-screen p-6">
+        <Avatar
+            alt="プロフィール画像"
+            src=""
+            sx={{ width: 100, height: 100 }}
+            />
+            <h2>{users.displayName}</h2>
             <h1 className="text-xl font-semibold mt-6">パスワード再設定</h1>
             <div>
                 <form onSubmit={doResetEmail} className="w-full max-w-md mt-4 bg-white p-6 rounded-lg shadow-md">
