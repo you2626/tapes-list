@@ -99,7 +99,7 @@ export default function Tapes() {
         <Header />
       </header>
       <main>
-        <h1 className="text-center font-bold text-2xl my-4">マスキングテープ一覧</h1>
+        <h1 className="text-center font-bold text-xl my-4">マスキングテープ一覧</h1>
         
         <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 px-4">
           {tapes.map((tape) => (

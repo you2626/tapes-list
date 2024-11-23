@@ -93,7 +93,7 @@ export default function Header(){
             </div>       
 
             <div className="px-2 space-x-4">
-            <Button variant="outlined" color="inherit" startIcon={<HomeIcon />}
+            <Button variant="contained" color="inherit" startIcon={<HomeIcon />}
             sx={{
                 backgroundColor:'white'
             }}>
@@ -108,14 +108,14 @@ export default function Header(){
             onOk={() => setIsOpen(false)}
             />
 
-            <Button variant="outlined" color="inherit" startIcon={<CreateIcon />} 
+            <Button variant="contained" color="inherit" startIcon={<CreateIcon />} 
             sx={{
                 backgroundColor:'white'
             }}
             onClick={() => setIsOpen(true)}>
             登録
             </Button>
-            <Button variant="outlined" color="inherit" startIcon={<FaceIcon />}
+            <Button variant="contained" color="inherit" startIcon={<FaceIcon />}
             sx={{
                 backgroundColor:'white'
             }}>
@@ -125,7 +125,7 @@ export default function Header(){
             </Button>
             { currentUser ? (
             <>
-            <Button variant="outlined" color="inherit" startIcon={<LogoutIcon />}
+            <Button variant="contained" color="inherit" startIcon={<LogoutIcon />}
             sx={{backgroundColor:'white'}}
             onClick={doLogout}
             >
@@ -134,7 +134,7 @@ export default function Header(){
             </>
             ):(
                 <Link href="/signin">
-                <Button variant="outlined" color="inherit" startIcon={<LoginIcon />} sx={{ backgroundColor: 'white' }}>
+                <Button variant="contained" color="inherit" startIcon={<LoginIcon />} sx={{ backgroundColor: 'white' }}>
                 ログイン
             </Button>
             </Link>
