@@ -37,7 +37,8 @@ export default function Mypage (){
         <div>
             <Header />
 
-        <div className="flex flex-col items-center justify-center min-h-screen p-6">
+        <h1 className="text-center font-bold text-2xl my-4">マイページ</h1>
+        <div className="flex flex-col items-center min-h-screen p-6">
         <Avatar
             alt="プロフィール画像"
             src=""

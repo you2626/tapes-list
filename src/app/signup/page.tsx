@@ -57,14 +57,14 @@ const Signup=()=>{
     }
 
     return (
-        <div className="max-w-md mx-auto p-6 border border-gray-300 rounded-lg bg-gray-100">
+        <div className="max-w-md mx-auto my-4 p-6 border border-gray-300 rounded-lg bg-gray-100">
             <h1 className="text-center text-2xl font-bold mb-4">
                 新規登録
                 </h1>
                 {error && <p className="text-red-500 mb-4">{error}</p>} {/* エラーメッセージを表示 */}
             <form onSubmit={doRegister}>
             <label className="block mb-2">
-                    My Name
+                    マイネーム：
                     <input name="myname" 
                     type="text" 
                     placeholder="nameを入力してください"
@@ -74,7 +74,7 @@ const Signup=()=>{
                     />
                 </label>
                 <label className="block mb-2">
-                    Emaill
+                    メールアドレス：
                     <input name="email" 
                     type="email" 
                     placeholder="emailを入力してください"
@@ -84,7 +84,7 @@ const Signup=()=>{
                     />
                 </label>
                 <label className="block mb-4">
-                    Password
+                    パスワード：
                     <input
                     name="password" 
                     type="password" 

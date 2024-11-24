@@ -33,7 +33,7 @@ const Signin=()=>{
 
     return (
 
-        <div className="max-w-md mx-auto p-6 border border-gray-300 rounded-lg bg-gray-100">
+        <div className="max-w-md mx-auto my-4 p-6 border border-gray-300 rounded-lg bg-gray-100">
             <h1 className="text-center text-2xl font-bold mb-4">
                 ログイン
                 </h1>
