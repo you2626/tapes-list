@@ -1,33 +1,39 @@
 'use client';
 
-import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+import { signInWithEmailAndPassword } from "firebase/auth";
 import Link from "next/link";
-import React, { useContext, useState } from "react";
+import React, { useState } from "react";
 import { auth } from "../lib/firebase";
-import Header from "../components/Header";
 import { useRouter } from "next/navigation";
+import { FirebaseError } from "firebase/app";
 
 const Signin=()=>{
     const [email,setEmail] = useState("");
     const [password,setPassword] = useState("");
-    const [error, setError] = useState(""); // エラーメッセージ用のステートを追加
+    const [error, setError] = useState<string>(""); // エラーメッセージ用のステートを追加
     const router = useRouter(); // useRouterを呼び出し
 
     // ユーザーがログインボタンを押下したときにdoLogin関数が実行される
-    const doLogin = async(e:any) => {
+    const doLogin = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
         // Firebaseで用意されているメールアドレスとパスワードでログインするための関数
         try {
         const userCredential = await signInWithEmailAndPassword(auth,email,password);
             const user = userCredential.user;
-            alert("ログイン成功!")
             console.log(user);
             router.push("/tapes"); // ログイン成功後に/tapesへリダイレクト
-        } catch(error:any)  {
-            setError(error.message);
-            alert("ログインできません")
-            console.log(error);
+        } catch(error: unknown)  {
+            if (error instanceof FirebaseError) {
+                setError(error.message);
+                console.error("FirebaseError: ", error.message);
+            } else if (error instanceof Error) {
+                setError(error.message);
+                console.error("General Error: ", error.message);
+            } else {
+                setError("予期しないエラーが発生しました");
+                console.error("Unknown error: ", error);
+            }
         }
     };
 

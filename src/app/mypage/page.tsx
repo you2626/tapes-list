@@ -1,19 +1,18 @@
 'use client';
 
 import { Avatar } from "@mui/material";
-import { getAuth, sendPasswordResetEmail } from "firebase/auth";
+import { sendPasswordResetEmail } from "firebase/auth";
 import { useEffect, useState } from "react";
 import { auth, db } from "../lib/firebase";
 import Header from "../components/Header";
-import { useRouter } from "next/navigation";
 import { useAuth } from "../context/AuthContext";
 import { doc, getDoc } from "firebase/firestore";
+import { FirebaseError } from "firebase/app";
 
 export default function Mypage (){
 
     // 現在、ログインしているユーザーを取得する
     const {currentUser} = useAuth();
-    const router = useRouter();
 
     const [email,setEmail] = useState("");
     const [userDisplayName, setUserDisplayName] = useState<string | null>(null);
@@ -63,8 +62,14 @@ export default function Mypage (){
         alert("送信しました。");
         console.log(email);
         setEmail("");
-        } catch(error:any) {
-            console.log(error);     
+        } catch (error) {
+        if (error instanceof FirebaseError) {
+            console.error("Firebase Error: ", error.message);
+            alert(`エラーが発生しました: ${error.message}`);
+        } else {
+            console.error("予期しないエラー: ", error);
+            alert("予期しないエラーが発生しました。");
+        }
         }
     };
 

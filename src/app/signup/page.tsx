@@ -1,11 +1,12 @@
 'use client';
 
-import { createUserWithEmailAndPassword, getAuth } from "firebase/auth";
+import { createUserWithEmailAndPassword } from "firebase/auth";
 import Link from "next/link";
 import React, { useState } from "react";
 import { auth, db } from "../lib/firebase";
 import { doc, setDoc } from "firebase/firestore";
 import { useRouter } from "next/navigation";
+import { FirebaseError } from "firebase/app";
 
 const Signup=()=>{
     // useStateでユーザーが入力したマイネームとメールアドレス、パスワードをmyname,email,passwordに格納する
@@ -17,7 +18,7 @@ const Signup=()=>{
     const router = useRouter();
 
     // ユーザーが登録ボタンを押下したときにdoRegister関数が実行される
-    const doRegister = async(e:any) => {
+    const doRegister = async(e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault(); // フォームのデフォルト動作を防ぐ
 
         // バリデーション
@@ -50,9 +51,17 @@ const Signup=()=>{
             // 登録後、ログインページへリダイレクト
             router.push("/signin");
 
-        } catch (error:any) {
-            setError(error.message);  // エラーメッセージを状態に保存
-            console.log(error);
+        } catch (error: unknown) {
+            if (error instanceof FirebaseError) {
+                setError(error.message);  
+                console.log("FirebaseError: ", error.message);
+            } else if (error instanceof Error) {
+                setError(error.message); 
+                console.log("Error: ", error.message);
+            } else {
+                setError("予期しないエラーが発生しました");
+                console.log("Unknown error: ", error);
+            }
         }
     }
 

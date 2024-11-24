@@ -1,4 +1,4 @@
-import { collection, doc, serverTimestamp, updateDoc } from 'firebase/firestore';
+import { doc, serverTimestamp, updateDoc } from 'firebase/firestore';
 import React, { useEffect, useState } from 'react';
 import { db } from '../lib/firebase';
 import { Input } from '@mui/material';
@@ -7,12 +7,12 @@ export type ModalProps = {
   open: boolean;
   onCancel: () => void;
   onOk: () => void;
-  imageSrc:string; // 画像URLを受け取るプロパティを追加
-  generatedId:string; // IDを受け取るプロパティを追加
-  initialTitle: string; // 初期タイトルを受け取るプロパティを追加
-  initialCategory: string; // 初期カテゴリを受け取るプロパティを追加
-  initialDescription: string; // 初期説明を受け取るプロパティを追加
-  onUpdate: (title: string, category: string, description: string) => void; // 更新を通知するプロパティ
+  imageSrc:string; 
+  generatedId:string;
+  initialTitle: string;
+  initialCategory: string;
+  initialDescription: string;
+  onUpdate: (title: string, category: string, description: string) => void;
 };
 
 const UpdateModal = (props: ModalProps) => {
@@ -50,6 +50,7 @@ const UpdateModal = (props: ModalProps) => {
           props.onOk();
         } catch (error) {
           console.error("Error updating document:", error);
+          setErrorMessage("更新に失敗しました。もう一度お試しください。");
         }
       };
 
@@ -78,6 +79,7 @@ const UpdateModal = (props: ModalProps) => {
                     className="w-full border"
                     onChange={(e) => setUpdateDescription(e.target.value)}
                 />
+                {errorMessage && <p className="text-red-500">{errorMessage}</p>}
                 <div className="flex mt-auto w-full py-5">
                     <button
                         className="bg-orange-300 hover:bg-orange-400 text-white px-8 py-2 mx-auto"
@@ -94,11 +96,11 @@ const UpdateModal = (props: ModalProps) => {
         </div>
       </div>
       <div
-       className="fixed inset-0 bg-black bg-opacity-50 w-full h-full z-10"
-       onClick={() => props.onCancel()}
-     ></div>
-   </>
- ) : null;
+        className="fixed inset-0 bg-black bg-opacity-50 w-full h-full z-10"
+        onClick={() => props.onCancel()}
+      ></div>
+    </>
+  ) : null;
 };
 
 export default UpdateModal;

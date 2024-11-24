@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useEffect,useState,useContext } from "react";
-import { getAuth, onAuthStateChanged} from 'firebase/auth';
+import { onAuthStateChanged} from 'firebase/auth';
 import { auth } from '../lib/firebase'; // ここで初期化されたauthをインポート
 
 // コンテキストを作成
@@ -26,7 +26,7 @@ export function AuthProvider({children}) {
             setLoading(false)
         })
         return unsubscribe; // クリーンアップ関数
-    },[auth]);
+    },[]);
 
     const value = {
         currentUser,

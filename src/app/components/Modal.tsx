@@ -5,6 +5,7 @@ import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import { db, storage } from "../lib/firebase";
 import {v4 as uuidv4} from 'uuid';
 import { useAuth } from "../context/AuthContext";
+import Image from "next/image";
 
 export type ModalProps = {
     open: boolean;
@@ -111,6 +112,8 @@ const Modal = (props: ModalProps) => {
                     placeholder="タイトルを入力"
                     onChange={(e) => setAddTitle(e.target.value)}
                 />
+                
+                {imageError && <p className="text-red-500">{imageError}</p>}
                 <p className="text-lg my-3">画像</p>
                 <input
                     type="file"
@@ -118,15 +121,16 @@ const Modal = (props: ModalProps) => {
                     onChange={(e) => {
                         onFileUpload(e);
                     }}
-                />
-                {addImage && <img src={addImage} alt="画像" width={500} height={500} />}
+                    />
+                {addImage && <Image src={addImage} alt="画像" width={500} height={500} />}
                 <p className="text-lg my-3">カテゴリ</p>
                 <Input
                     value={addCategory}
                     type="text"
                     placeholder="カテゴリを入力"
                     onChange={(e) => setAddCategory(e.target.value)}
-                />
+                    />
+                    {formError && <p className="text-red-500">{formError}</p>}
                 <p className="text-lg my-3">備考</p>
                 <textarea
                     value={addDescription}

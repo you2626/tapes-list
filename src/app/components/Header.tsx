@@ -1,7 +1,6 @@
 "use client";
 
 import Link from "next/link";
-import Image from "next/image";
 import CreateIcon from '@mui/icons-material/Create';
 import FaceIcon from '@mui/icons-material/Face';
 import HomeIcon from '@mui/icons-material/Home';

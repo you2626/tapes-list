@@ -1,23 +1,22 @@
 'use client';
 
 import React from 'react';
-import Image from "next/image";
 import Header from "../components/Header";
 import Pagenation from "../components/Pagination";
 import TapeItem from "../components/TapeItem";
 import {db} from "../lib/firebase";
-import { collection, getDocs, limit as firestoreLimit, onSnapshot, orderBy, query, startAfter, startAt, where } from "firebase/firestore"; 
+import { collection, DocumentSnapshot, onSnapshot, orderBy, query, where } from "firebase/firestore"; 
 import { useEffect, useState } from "react";
 import {Type} from "../components/Type";
 import Link from "next/link";
-import { AuthProvider, useAuth } from "../context/AuthContext";
+import { useAuth } from "../context/AuthContext";
 
 export default function Tapes() {
   const [tapes,setTapes]=useState<Type[]>([]);
   const [error, setError] = useState<string | null>(null); // エラーステートを追加
   const [loading,setLoading] = useState(true); //ローディング状態を追加
   const [totalCount,setTotalCount]=useState(0);
-  const [allDocs,setAllDocs]=useState<any[]>([]); // すべてのドキュメントを保持
+  const [allDocs,setAllDocs]=useState<DocumentSnapshot[]>([]); // すべてのドキュメントを保持
 
   const limitPage = 9; // 1ページあたりの表示件数
   
@@ -39,12 +38,13 @@ export default function Tapes() {
   // AuthContext から currentUser を取得
   const { currentUser } = useAuth();
 
-  const userId = currentUser?.uid;
-
   // 全データの取得と保存
   useEffect(() => {
 
-    if (!userId) return; // userId がない場合は処理を終了
+    if (!currentUser?.uid) {
+      setLoading(false);
+      return;
+    }
 
     const tapeData = collection(db, "tapes");
     const q = query(tapeData,where("userId", "==", currentUser.uid), orderBy('timestamp', 'desc'));
@@ -61,11 +61,11 @@ export default function Tapes() {
     });
 
     return () => unsubscribe();
-  }, [userId, currentUser]);
+  }, [currentUser]);
 
   // ページごとのデータ取得
   useEffect(() => {
-    if (allDocs.length > 0) {
+    if (allDocs?.length > 0) {
       const startIndex = (currentPage - 1) * limitPage;
       const endIndex = Math.min(startIndex + limitPage, allDocs.length);
       
@@ -75,10 +75,10 @@ export default function Tapes() {
       // データを整形
       const tapeList: Type[] = currentDocs.map((doc) => ({
         id: doc.id,
-        imageSrc: doc.data().imageSrc,
-        title: doc.data().title,
-        category: doc.data().category,
-        description: doc.data().description,
+        imageSrc: doc.data()?.imageSrc || "",
+        title: doc.data()?.title || "",
+        category: doc.data()?.category || "",
+        description: doc.data()?.description || "",
       }));
 
       setTapes(tapeList);
