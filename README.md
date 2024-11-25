@@ -12,6 +12,7 @@
 
 Webアプリにすることで気軽に持ち運ぶことができるので、現地で重複したマスキングテープを購入することもなくなると思い作成した。
 
+![TapeList](https://github.com/user-attachments/assets/ecd8540b-c236-4829-a951-34683ecf3f53)
 
 ## 
 
