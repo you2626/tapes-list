@@ -12,6 +12,8 @@ Webアプリにすることで気軽に持ち運ぶことができるので、�
 
 ### URL
 
+https://tapes-list2.vercel.app/
+
 ### テスト用IDとパスワード
 
 ID（メールアドレス）：yffimr.ekab@gmail.com
