@@ -72,10 +72,9 @@ const Signin=()=>{
                 ログイン
                 </button>
             </form>
-            <div>
-                <h2>
-                    新規登録は
-                    <Link href={"/signup"}>こちら→</Link>
+            <div className="pt-2">
+                <h2> 
+                    <Link href={"/signup"}>新規登録はこちら→</Link>
                 </h2>
             </div>
         </div>

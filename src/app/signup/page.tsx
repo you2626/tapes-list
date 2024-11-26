@@ -76,7 +76,7 @@ const Signup=()=>{
                     マイネーム：
                     <input name="myname" 
                     type="text" 
-                    placeholder="nameを入力してください"
+                    placeholder="nameを入力"
                     className="mt-1 block w-full p-2 border border-gray-300 rounded"
                     // onChangeでユーザーが入力した値を取得し、その値をmynameに入れる
                     onChange={(e) => setMyname(e.target.value)}
@@ -86,7 +86,7 @@ const Signup=()=>{
                     メールアドレス：
                     <input name="email" 
                     type="email" 
-                    placeholder="emailを入力してください"
+                    placeholder="emailを入力"
                     className="mt-1 block w-full p-2 border border-gray-300 rounded"
                     // onChangeでユーザーが入力した値を取得し、その値をemailに入れる
                     onChange={(e) => setEmail(e.target.value)}
@@ -97,7 +97,7 @@ const Signup=()=>{
                     <input
                     name="password" 
                     type="password" 
-                    placeholder="passwordを入力してください"
+                    placeholder="passwordを入力"
                     className="mt-1 block w-full p-2 border border-gray-300 rounded"
                     // onChangeでユーザーが入力した値を取得し、その値をpasswordに入れる
                     onChange={(e) => setPassword(e.target.value)}
@@ -110,10 +110,9 @@ const Signup=()=>{
                     新規登録
                     </button>
             </form>
-            <div>
+            <div className="pt-2">
                 <h2>
-                    サインインは
-                    <Link href={"/signin"}>こちら→</Link>
+                    <Link href={"/signin"}>ログインはこちら→</Link>
                 </h2>
             </div>
         </div>

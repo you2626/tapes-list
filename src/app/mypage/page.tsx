@@ -125,7 +125,14 @@ export default function Mypage () {
                 {/* // suppressHydrationWarningを入れてサーバーサイドとクライアントサイドでレンダーされる内容が違うときにエラーが出ないようにする
                 // useAuth()で取得した現在ログインしているユーザーをdisplayNameで表示 */}
                 <div suppressHydrationWarning={true}>
-                    <div className="text-xl font-bold text-center text-orange-400 py-2">ユーザーネーム：{userDisplayName}</div>
+                <div className="flex items-center space-x-2">
+                    <label className="block">
+                        マイネーム：
+                    </label>
+                    <div className="text-xl font-bold text-center text-orange-400">
+                        {userDisplayName}
+                    </div>
+                </div>
                     <div className="w-full max-w-md mt-4 bg-white p-6 rounded-lg shadow-md flex flex-col items-center">
                     <h2 className="text-center text-xl font-semibold py-3">プロフィール画像</h2>
                     <Avatar 
@@ -161,6 +168,7 @@ export default function Mypage () {
                     <input
                     type="email"
                     name="email"
+                    placeholder="emailを入力"
                     className="border rounded p-2 mb-4 w-full"
                     onChange={(e) => setEmail(e.target.value)}
                     value={email}

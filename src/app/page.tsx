@@ -40,42 +40,42 @@ export default function Home() {
               alt="マスキングテープの一覧"
               width={400}
               height={400}
-              className="rounded-lg border-2 border-yellow-300 p-2"
+              className="rounded-lg border-2 border-yellow-300 p-2 shadow-md"
             />
             <Image
               src="/images/AddTape.png"
               alt="テープの追加"
               width={400}
               height={400}
-              className="rounded-lg border-2 border-yellow-300 p-2"
+              className="rounded-lg border-2 border-yellow-300 p-2 shadow-md"
             />
             <Image
               src="/images/UpdateTape.png"
               alt="詳細情報ページ"
               width={400}
               height={400}
-              className="rounded-lg border-2 border-yellow-300 p-2"
+              className="rounded-lg border-2 border-yellow-300 p-2 shadow-md"
             />
             <Image
               src="/images/signup.png"
               alt="新規アカウント登録"
               width={400}
               height={400}
-              className="rounded-lg border-2 border-yellow-300 p-2"
+              className="rounded-lg border-2 border-yellow-300 p-2 shadow-md"
             />
             <Image
               src="/images/signin.png"
               alt="ログインページ"
               width={400}
               height={400}
-              className="rounded-lg border-2 border-yellow-300 p-2"
+              className="rounded-lg border-2 border-yellow-300 p-2 shadow-md"
             />
             <Image
               src="/images/mypage.png"
               alt="マイページ"
               width={400}
               height={400}
-              className="rounded-lg border-2 border-yellow-300 p-2"
+              className="rounded-lg border-2 border-yellow-300 p-2 shadow-md"
             />
           </div>
         </main>

@@ -90,10 +90,11 @@ export default function Header(){
             )}
             </div>       
 
-            <div className="px-2 space-x-4">
+            <div className="px-2 space-x-2">
             <Button variant="contained" color="inherit" startIcon={<HomeIcon />}
             sx={{
-                backgroundColor:'white'
+                backgroundColor:'white',
+                margin:1
             }}>
             <Link href="/tapes?p=1">
             ホーム
