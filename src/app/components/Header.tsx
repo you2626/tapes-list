@@ -15,7 +15,6 @@ import { useRouter } from "next/navigation";
 import { doc, getDoc } from "firebase/firestore";
 import { db } from "../lib/firebase";
 
-
 export default function Header(){
 
     // 現在、ログインしているユーザーを取得する
@@ -34,8 +33,6 @@ export default function Header(){
                     const userDoc = await getDoc(userDocRef);
 
                     if (userDoc.exists()) {
-                        const data = userDoc.data();
-                        console.log("User data:",data);
                         // Firestoreから取得したdisplayName,imageをstateにセット
                         setUserDisplayName(userDoc.data()?.displayName || "");
                         setUserImage(userDoc.data()?.image || "");
@@ -82,7 +79,7 @@ export default function Header(){
                 {/* // suppressHydrationWarningを入れてサーバーサイドとクライアントサイドでレンダーされる内容が違うときにエラーが出ないようにする
                 // useAuth()で取得した現在ログインしているユーザーをdisplayNameで表示 */}
                 <div suppressHydrationWarning={true}>
-                        <div className="font-bold text-orange-400">{userDisplayName}</div>
+                    <div className="font-bold text-orange-400">{userDisplayName}</div>
                 </div>
             </>
             ) : (
