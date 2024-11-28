@@ -54,13 +54,10 @@ const Signup=()=>{
         } catch (error: unknown) {
             if (error instanceof FirebaseError) {
                 setError(error.message);  
-                console.log("FirebaseError: ", error.message);
             } else if (error instanceof Error) {
                 setError(error.message); 
-                console.log("Error: ", error.message);
             } else {
                 setError("予期しないエラーが発生しました");
-                console.log("Unknown error: ", error);
             }
         }
     }
@@ -107,8 +104,8 @@ const Signup=()=>{
                 type="submit"
                 className="w-full p-2 bg-orange-300 text-white rounded hover:bg-orange-400"
                 >
-                    新規登録
-                    </button>
+                新規登録
+                </button>
             </form>
             <div className="pt-2">
                 <h2>
