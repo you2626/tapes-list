@@ -21,6 +21,7 @@ const Signin=()=>{
         try {
         const userCredential = await signInWithEmailAndPassword(auth,email,password);
             const user = userCredential.user;
+            console.log(user);
             router.push("/tapes"); // ログイン成功後に/tapesへリダイレクト
         } catch(error: unknown)  {
             if (error instanceof FirebaseError) {
