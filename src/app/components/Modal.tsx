@@ -90,7 +90,6 @@ const Modal = (props: ModalProps) => {
 
         try {
             const snapshot = await uploadBytes(storageRef, file);
-            console.log("Uploaded a blob or file!", snapshot);
             const url = await getDownloadURL(storageRef);
             setAddImage(url);
             setImageError(null);
