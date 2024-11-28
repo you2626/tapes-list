@@ -35,7 +35,6 @@ export default function Header(){
 
                     if (userDoc.exists()) {
                         const data = userDoc.data();
-                        console.log("User data:",data);
                         // Firestoreから取得したdisplayName,imageをstateにセット
                         setUserDisplayName(userDoc.data()?.displayName || "");
                         setUserImage(userDoc.data()?.image || "");

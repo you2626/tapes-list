@@ -44,7 +44,6 @@ export default function Mypage () {
 
                     if (userDoc.exists()) {
                         const data = userDoc.data();
-                        console.log("User data:",data);
                         // Firestoreから取得したdisplayName,imageをstateにセット
                         setUserDisplayName(data?.displayName || "");
                         setUserImage(data?.image || "/images/default-avatar.png");
@@ -76,7 +75,6 @@ export default function Mypage () {
         try {
             await sendPasswordResetEmail(auth,email,actionCodeSettings)
             alert("パスワードリセットメールを送信しました。");
-            console.log(email);
             setEmail("");
         } catch (error) {
             if (error instanceof FirebaseError) {

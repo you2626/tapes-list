@@ -54,13 +54,10 @@ const Signup=()=>{
         } catch (error: unknown) {
             if (error instanceof FirebaseError) {
                 setError(error.message);  
-                console.log("FirebaseError: ", error.message);
             } else if (error instanceof Error) {
                 setError(error.message); 
-                console.log("Error: ", error.message);
             } else {
                 setError("予期しないエラーが発生しました");
-                console.log("Unknown error: ", error);
             }
         }
     }
